@@ -51,6 +51,16 @@ app.MapPost("/pages/imc/cadastrar", ([FromServices] AppDataContext ctx, [FromBod
     //Calcular o IMC
     imc.Valor = imc.Peso / (imc.Altura * imc.Altura);
 
+    //Classificação
+    if (imc.Valor < 18.5)
+        imc.Classificacao = "Magreza";
+    if (imc.Valor <= 24.9)
+        imc.Classificacao = "Normal";
+    if (imc.Valor <= 39.9)
+        imc.Classificacao = "Obesidade";    
+    else 
+        imc.Classificacao = "Obesidade Grave";
+    
     imc.Aluno = ctx.Alunos.Find(imc.AlunoId);
     
     ctx.Imcs.Add(imc);
